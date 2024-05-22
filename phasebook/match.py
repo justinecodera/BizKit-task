@@ -11,17 +11,17 @@ bp = Blueprint("match", __name__, url_prefix="/match")
 def match(match_id):
     if match_id < 0 or match_id >= len(MATCHES):
         return "Invalid match id", 404
-
+    
     start = time.time()
-    msg = "Match found" if (is_match(*MATCHES[match_id])) else "No match"
+    msg = "Match" if (is_match(*MATCHES[match_id])) else 'No Match'
     end = time.time()
 
     return {"message": msg, "elapsedTime": end - start}, 200
 
 
 def is_match(fave_numbers_1, fave_numbers_2):
-    for number in fave_numbers_2:
-        if number not in fave_numbers_1:
+    number_set = set(fave_numbers_1) 
+    for num in fave_numbers_2:
+        if num not in number_set:
             return False
-
     return True
